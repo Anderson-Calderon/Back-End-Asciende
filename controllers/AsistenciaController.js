@@ -59,6 +59,8 @@ const agregarAsistencia = async (req,res)=>{
 
 		let hora = new Date();
 		hora = hora.toLocaleTimeString('es-ES');
+
+		console.log(hora);
 		
 
 		req.body.horaIngreso=hora;
