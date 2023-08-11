@@ -19,6 +19,20 @@ const agregarAsistencia = async (req,res)=>{
 
 	console.log("HOLA , SOY AGREGAR ASISTENCIA");
 
+		
+
+		// crea un nuevo objeto `Date`
+		var today = new Date();
+		 
+		// obtener la fecha y la hora
+		var now = today.toLocaleString();
+		console.log("FECHA HOY : " , now);
+		 
+		/*
+		    Resultado: 1/27/2020, 9:30:00 PM
+*/
+
+
 	const {dni} = req.body;	
 
 	const usuarioExiste = await Usuario.findOne({dni});
@@ -60,19 +74,7 @@ const agregarAsistencia = async (req,res)=>{
 		let hora = new Date();
 		hora = hora.toLocaleTimeString('es-ES');
 
-		console.log("LA HORA : ",hora);
-
-		// crea un nuevo objeto `Date`
-		var today = new Date();
-		 
-		// obtener la fecha y la hora
-		var now = today.toLocaleString();
-		console.log("FECHA HOY : " , now);
-		 
-		/*
-		    Resultado: 1/27/2020, 9:30:00 PM
-*/
-
+	
 		console.log(hora);
 		
 
