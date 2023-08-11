@@ -62,6 +62,17 @@ const agregarAsistencia = async (req,res)=>{
 
 		console.log("LA HORA : ",hora);
 
+		// crea un nuevo objeto `Date`
+		var today = new Date();
+		 
+		// obtener la fecha y la hora
+		var now = today.toLocaleString();
+		console.log("FECHA HOY : " , now);
+		 
+		/*
+		    Resultado: 1/27/2020, 9:30:00 PM
+*/
+
 		console.log(hora);
 		
 
