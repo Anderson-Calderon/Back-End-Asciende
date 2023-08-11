@@ -149,7 +149,7 @@ const editarAsistencia = async (req,res)=>{
 
 
 
-	const existeAsistencia = await Asistencia.findOne({dni});
+	const existeAsistencia = await Asistencia.findOne({dni , fecha : darFechaHoyFormateada()});
 
 	if(!existeAsistencia){
 
