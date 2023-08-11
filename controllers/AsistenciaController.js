@@ -187,6 +187,31 @@ const editarAsistencia = async (req,res)=>{
 	let hora = new Date();
 		hora = hora.toLocaleTimeString('es-ES');
 
+
+		//CÓDIGO PARA ACTUALIZAR LA HORA , A LA HORA PERUANA Y NO LA DEL SERVIDOR .
+		//PARA ELLO RESTAMOS 5 HORAS A LA HORA DEL SERVIDOR
+		let nuevaHoraEstatico = hora.split(":")[0];
+
+		let nuevaHoraVariable=parseInt(nuevaHoraEstatico);
+
+		if(nuevaHoraVariable>=5){
+
+			nuevaHoraVariable = nuevaHoraVariable - 5; 
+
+		}else{
+
+			nuevaHoraVariable = nuevaHoraVariable + 24 - 5;
+
+		}
+
+		if(nuevaHoraVariable<10){
+
+			nuevaHoraVariable = "0"+nuevaHoraVariable;
+
+		}
+		
+		hora=hora.replace(nuevaHoraEstatico,""+nuevaHoraVariable);
+
 	if(  tipoAsistencia=="almuerzo" && hora<"13:00:00"){
 
 
