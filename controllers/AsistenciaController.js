@@ -19,20 +19,6 @@ const agregarAsistencia = async (req,res)=>{
 
 	console.log("HOLA , SOY AGREGAR ASISTENCIA");
 
-		
-
-		// crea un nuevo objeto `Date`
-		var today = new Date();
-		 
-		// obtener la fecha y la hora
-		var now = today.toLocaleString();
-		console.log("FECHA HOY : " , now);
-		 
-		/*
-		    Resultado: 1/27/2020, 9:30:00 PM
-*/
-
-
 	const {dni} = req.body;	
 
 	const usuarioExiste = await Usuario.findOne({dni});
@@ -74,8 +60,31 @@ const agregarAsistencia = async (req,res)=>{
 		let hora = new Date();
 		hora = hora.toLocaleTimeString('es-ES');
 
-	
-		console.log(hora);
+		//CÓDIGO PARA ACTUALIZAR LA HORA , A LA HORA PERUANA Y NO LA DEL SERVIDOR .
+		//PARA ELLO RESTAMOS 5 HORAS A LA HORA DEL SERVIDOR
+		let nuevaHoraEstatico = hora.split(":")[0];
+
+		let nuevaHoraVariable=parseInt(nuevaHoraEstatico);
+
+		if(nuevaHoraVariable>=5){
+
+			nuevaHoraVariable = nuevaHoraVariable - 5; 
+
+		}else{
+
+			nuevaHoraVariable = nuevaHoraVariable + 24 - 5;
+
+		}
+
+		if(nuevaHoraVariable<10){
+
+			nuevaHoraVariable = "0"+nuevaHoraVariable;
+
+		}
+		
+		hora=hora.replace(nuevaHoraEstatico,""+nuevaHoraVariable);
+
+
 		
 
 		req.body.horaIngreso=hora;
@@ -102,7 +111,7 @@ const agregarAsistencia = async (req,res)=>{
 
 	
 		
-		console.log("ERROR : ");
+		console.log("ERROR : ",error);
 
 	}
 }
