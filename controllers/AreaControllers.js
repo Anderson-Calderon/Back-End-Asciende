@@ -79,18 +79,27 @@ const editarArea = async (req,res)=>{
 
 	const {id} = req.params;
 	
-	const area = await Area.findById(id);
+	const area = await Area.findById(id),
+		  areaConElMismoNombreExiste = await Area.findOne({nombre:req.body.nombreArea});
 
 
 
 	if(!area){
 
-		const error = new Error("El área que desea utilizar no existe");
+		const error = new Error("El área que desea editar no existe");
 		console.log("pasó algo ?");
 
 		return res.status(400).json({msg:error.message});
 
 
+	}
+
+	if(areaConElMismoNombreExiste && area.nombre!=req.body.nombreArea){
+
+		const error = new Error("El nombre que desea asignar a su área ya existe . Por favor intente con otro nombre!");
+		
+
+		return res.status(400).json({msg:error.message});
 	}
 
 

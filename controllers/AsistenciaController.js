@@ -62,27 +62,27 @@ const agregarAsistencia = async (req,res)=>{
 
 		//CÓDIGO PARA ACTUALIZAR LA HORA , A LA HORA PERUANA Y NO LA DEL SERVIDOR .
 		//PARA ELLO RESTAMOS 5 HORAS A LA HORA DEL SERVIDOR
-		let nuevaHoraEstatico = hora.split(":")[0];
+		// let nuevaHoraEstatico = hora.split(":")[0];
 
-		let nuevaHoraVariable=parseInt(nuevaHoraEstatico);
+		// let nuevaHoraVariable=parseInt(nuevaHoraEstatico);
 
-		if(nuevaHoraVariable>=5){
+		// if(nuevaHoraVariable>=5){
 
-			nuevaHoraVariable = nuevaHoraVariable - 5; 
+		// 	nuevaHoraVariable = nuevaHoraVariable - 5; 
 
-		}else{
+		// }else{
 
-			nuevaHoraVariable = nuevaHoraVariable + 24 - 5;
+		// 	nuevaHoraVariable = nuevaHoraVariable + 24 - 5;
 
-		}
+		// }
 
-		if(nuevaHoraVariable<10){
+		// if(nuevaHoraVariable<10){
 
-			nuevaHoraVariable = "0"+nuevaHoraVariable;
+		// 	nuevaHoraVariable = "0"+nuevaHoraVariable;
 
-		}
+		// }
 		
-		hora=hora.replace(nuevaHoraEstatico,""+nuevaHoraVariable);
+		// hora=hora.replace(nuevaHoraEstatico,""+nuevaHoraVariable);
 
 
 		
@@ -215,7 +215,7 @@ const editarAsistencia = async (req,res)=>{
 	if(  tipoAsistencia=="almuerzo" && hora<"13:00:00"){
 
 
-		const error = new Error("Aún no puedes marcar tu salida a almorzar. La salida es a las 14:00 pm");
+		const error = new Error("Aún no puedes marcar tu salida a almorzar. La salida es a partir de la 13:00 pm");
 
 		return res.status(400).json({msg:error.message});
 
@@ -257,13 +257,13 @@ const editarAsistencia = async (req,res)=>{
 
 			
 
-			res.json({"msg":"Hora de salida al almuerzo correto!"})
+			res.json({"msg":"Hora de salida al almuerzo correcto!"})
 
 
 			}else if(!existeAsistencia.horaIngresoAlmuerzo.includes(":")){
 
 				existeAsistencia.horaIngresoAlmuerzo=hora;
-				res.json({"msg":"Hora de ingreso al trabajo desúes de almuerzo correto!"})
+				res.json({"msg":"Hora de ingreso al trabajo despúes de almuerzo correcto!"})
 
 			}
 

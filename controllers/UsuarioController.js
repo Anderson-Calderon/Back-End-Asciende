@@ -145,15 +145,31 @@ const editarUsuario = async (req,res)=>{
 		const {usuario:nuevoUsuario , nuevoPassword} = req.body;
 
 		
-		const existeUsuario = await Usuario.findById(nuevoUsuario._id);
-		
+		const existeUsuario = await Usuario.findById(nuevoUsuario._id),
+		 	  usuarioConElMismoDniExiste = await Usuario.findOne({dni:nuevoUsuario.dni});
+			console.log(usuarioConElMismoDniExiste);
 
 		if(existeUsuario){
+
+			
+
+
+			if(usuarioConElMismoDniExiste && existeUsuario.dni!=nuevoUsuario.dni){
+
+				console.log("HOLA");
+				const error = new Error("El dni que desea asignar a su usuario ya existe . Por favor intente con otro DNI!");
+		
+
+				return res.status(400).json({msg:error.message});
+
+			}
 
 			existeUsuario.nombre=nuevoUsuario.nombre;
 			existeUsuario.apellido=nuevoUsuario.apellido;
 			existeUsuario.area=nuevoUsuario.area;
 			existeUsuario.dni=nuevoUsuario.dni;
+
+
 
 			if(nuevoPassword){
 
@@ -245,6 +261,8 @@ const eliminarUsuario = async (req,res)=>{
 
 	const usuarioExiste = await Usuario.findById(id);
 
+	
+	
 	if(!usuarioExiste){
 
 		const error = new Error("Este usuario no existe");
@@ -255,7 +273,7 @@ const eliminarUsuario = async (req,res)=>{
 
 	try{
 
-		await Usuario.deleteOne();
+		await usuarioExiste.deleteOne();
 
 		res.json({"msg":"Usuario eliminado Correctamente"})
 

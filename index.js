@@ -66,7 +66,7 @@ app.use("/api/asistencias",asistenciaRouter)
 
 app.listen(PORT,()=>{
 
-	console.log("CORRIENDO APP");
+	console.log("CORRIENDO APP",PORT);
 
 
 })
