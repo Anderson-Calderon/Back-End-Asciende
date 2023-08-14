@@ -62,27 +62,27 @@ const agregarAsistencia = async (req,res)=>{
 
 		//CÓDIGO PARA ACTUALIZAR LA HORA , A LA HORA PERUANA Y NO LA DEL SERVIDOR .
 		//PARA ELLO RESTAMOS 5 HORAS A LA HORA DEL SERVIDOR
-		// let nuevaHoraEstatico = hora.split(":")[0];
+		let nuevaHoraEstatico = hora.split(":")[0];
 
-		// let nuevaHoraVariable=parseInt(nuevaHoraEstatico);
+		let nuevaHoraVariable=parseInt(nuevaHoraEstatico);
 
-		// if(nuevaHoraVariable>=5){
+		if(nuevaHoraVariable>=5){
 
-		// 	nuevaHoraVariable = nuevaHoraVariable - 5; 
+			nuevaHoraVariable = nuevaHoraVariable - 5; 
 
-		// }else{
+		}else{
 
-		// 	nuevaHoraVariable = nuevaHoraVariable + 24 - 5;
+			nuevaHoraVariable = nuevaHoraVariable + 24 - 5;
 
-		// }
+		}
 
-		// if(nuevaHoraVariable<10){
+		if(nuevaHoraVariable<10){
 
-		// 	nuevaHoraVariable = "0"+nuevaHoraVariable;
+			nuevaHoraVariable = "0"+nuevaHoraVariable;
 
-		// }
+		}
 		
-		// hora=hora.replace(nuevaHoraEstatico,""+nuevaHoraVariable);
+		hora=hora.replace(nuevaHoraEstatico,""+nuevaHoraVariable);
 
 
 		
