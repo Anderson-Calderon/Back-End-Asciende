@@ -120,7 +120,8 @@ const obtenerAsistencias  = async (req,res)=>{
 
 	try{
 
-		const asistencias = await Asistencia.find();
+		const asistencias = await Asistencia.find({}).sort({createdAt:-1});
+		console.log(asistencias);
 
 		res.json(asistencias);
 
@@ -179,9 +180,17 @@ const editarAsistencia = async (req,res)=>{
 
 	if(!existeAsistencia){
 
-		const error = new Error("Para Marca tu salida  , primero tienes que marcar tu ingreso a trabajar");
+		const error = new Error("Para marcar  , primero tienes que registrar tu ingreso al trabajo");
 
 		return res.status(400).json({msg:error.message});
+	}
+
+	if(existeAsistencia.horaSalida.includes(":")){
+
+		const error = new Error("Ya marcaste tu hora de salida del trabajo , mañana vuelve a ingresar para marcar tu asistencia del íngreso.");
+
+		return res.status(400).json({msg:error.message});
+
 	}
 
 	let hora = new Date();
@@ -212,7 +221,17 @@ const editarAsistencia = async (req,res)=>{
 		
 		hora=hora.replace(nuevaHoraEstatico,""+nuevaHoraVariable);
 
-	if(  tipoAsistencia=="almuerzo" && hora<"13:00:00"){
+		if(tipoAsistencia=="idda" && !existeAsistencia.horaSalidaAlmuerzo.includes(":")){
+
+
+			const error = new Error("Para marcar tu hora de ingreso despúes de almuerzo , primero tienes que marcar tu hora de salida a almorzar.");
+
+			return res.status(400).json({msg:error.message});
+
+
+		}
+
+	if(  tipoAsistencia=="saa" && hora<"13:00:00"){
 
 
 		const error = new Error("Aún no puedes marcar tu salida a almorzar. La salida es a partir de la 13:00 pm");
@@ -221,24 +240,18 @@ const editarAsistencia = async (req,res)=>{
 
 	}	
 
-	if(  tipoAsistencia=="salida del trabajo" && hora<"18:00:00"){
+	/*if(  tipoAsistencia=="salida del trabajo" && hora<"18:00:00"){
 
 
 		const error = new Error("Aún no puedes marcar tu salida . La salida es a las 18:00 pm");
 
 		return res.status(400).json({msg:error.message});
 
-	}
+	}*/
 
-	if(existeAsistencia.horaSalida.includes(":")){
+	
 
-		const error = new Error("Ya marcaste tu hora de salida del trabajo , mañana vuelve a ingresar para marcar tu asistencia del íngreso.");
-
-		return res.status(400).json({msg:error.message});
-
-	}
-
-	if(  tipoAsistencia=="almuerzo" && existeAsistencia.horaIngresoAlmuerzo.includes(":")){
+	if(  tipoAsistencia=="idda" && existeAsistencia.horaIngresoAlmuerzo.includes(":")){
 
 		const error = new Error("Ya marcaste tu hora de ingreso y salida de almuerzo .");
 
@@ -249,7 +262,7 @@ const editarAsistencia = async (req,res)=>{
 	try{
 
 		
-		if(tipoAsistencia=="almuerzo"){
+		if(tipoAsistencia=="idda" || tipoAsistencia=="saa"){
 
 			if(!existeAsistencia.horaSalidaAlmuerzo.includes(":")){
 
